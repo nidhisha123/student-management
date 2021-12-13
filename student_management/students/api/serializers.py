@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from students.models import Students, Grade
+from student_management.students.models import Students, Grade
 
 
 class StudentsSerializer(serializers.ModelSerializer):

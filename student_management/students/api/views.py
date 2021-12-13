@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.exceptions import ValidationError
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle, ScopedRateThrottle
 from django_filters.rest_framework import DjangoFilterBackend
-from students.models import Students, Grade
+from student_management.students.models import Students, Grade
 from .serializers import StudentsSerializer, GradeSerializer
 from .throttling import StudentDetailThrottling
 from .pagination import StudentListPagination, StudentListOffsetPagination, GradeCursorPagination

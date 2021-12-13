@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
-from students.models import Grade, Students
+from student_management.students.models import Grade, Students
 from student_management.users.tests.factories import UserFactory
 
 
