@@ -1,16 +1,15 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.decorators import action
-from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 # from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import action,api_view
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .serializers import UserSerializer, RegistrationSerializer
+from .serializers import RegistrationSerializer, UserSerializer
 
 User = get_user_model()
 
@@ -40,9 +39,9 @@ class RegistrationApiView(APIView):
         
         if serializer.is_valid():
             account = serializer.save()
-            data['response'] = 'Registration Successful'
-            data['username'] = account.username
-            data['email'] = account.email
+            data["response"] = "Registration Successful"
+            data["username"] = account.username
+            data["email"] = account.email
 
             # # Token
             # token = Token.objects.get_or_create(user=account)
@@ -51,9 +50,9 @@ class RegistrationApiView(APIView):
             # JWT
             refresh = RefreshToken.for_user(account)
 
-            data['token'] = {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
+            data["token"] = {
+                    "refresh": str(refresh),
+                    "access": str(refresh.access_token),
                 }
         else:
             data = serializer.errors
@@ -61,9 +60,9 @@ class RegistrationApiView(APIView):
         return Response(data)
 
 
-@api_view(['POST'])
+@api_view(["POST"])
 def account_logout(request):
 
-    if request.method == 'POST':
+    if request.method == "POST":
         request.user.auth_token.delete()
-        return Response({'response': 'Logout Successful'}, status=status.HTTP_200_OK)
+        return Response({"response": "Logout Successful"}, status=status.HTTP_200_OK)

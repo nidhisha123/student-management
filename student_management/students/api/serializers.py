@@ -1,29 +1,29 @@
 from rest_framework import serializers
-from student_management.students.models import Students, Grade
+from student_management.students.models import Grade, Students
 
 
 class StudentsSerializer(serializers.ModelSerializer):
-	standard = serializers.CharField(source='grade.name',read_only=True)
+    standard = serializers.CharField(source="grade.name",read_only=True)
 
-	class Meta:
-		model = Students
-		fields = '__all__'
+    class Meta:
+        model = Students
+        fields = "__all__"
 
-	def validate_age(self,value):
-		if value < 3 or value > 7:
-			raise serializers.ValidationError('Student age must be between 3 and 7')
-		return value
+    def validate_age(self,value):
+        if value < 3 or value > 7:
+            raise serializers.ValidationError("Student age must be between 3 and 7")
+        return value
 
 
 class GradeSerializer(serializers.ModelSerializer):
-	students = StudentsSerializer(read_only=True, many=True)
+    students = StudentsSerializer(read_only=True, many=True)
 
-	class Meta:
-		model = Grade
-		fields = '__all__'
+    class Meta:
+        model = Grade
+        fields = "__all__"
 
-	def validate_name(self,value):
-		exist = Grade.objects.filter(name=value).exists()
-		if exist:
-			raise serializers.ValidationError('Grade already exists')
-		return value
+    def validate_name(self,value):
+        exist = Grade.objects.filter(name=value).exists()
+        if exist:
+            raise serializers.ValidationError("Grade already exists")
+        return value
